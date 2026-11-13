@@ -1,0 +1,89 @@
+{
+  "name": "shopping-ai-agent-langgraph-js-demo",
+  "version": "1.0.0",
+  "description": "An agentic AI grocery shopping assistant built with LangGraph.js and Redis. A learning-focused demo of agent memory, RAG and agentic RAG, semantic caching and live context retrieval, with a swappable AI provider.",
+  "private": true,
+  "workspaces": [
+    "src/modules/ai/providers/*"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0"
+  },
+  "imports": {
+    "#config": {
+      "app-compiled": "./src/config.js",
+      "default": "./src/config.ts"
+    },
+    "#lib/*": {
+      "app-compiled": "./src/lib/*.js",
+      "default": "./src/lib/*.ts"
+    },
+    "#modules/*": {
+      "app-compiled": "./src/modules/*.js",
+      "default": "./src/modules/*.ts"
+    }
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "load-products": "node src/scripts/load-products.ts",
+    "setup-context-retriever": "node src/scripts/setup-context-retriever.ts",
+    "debug-config": "node src/scripts/debug-config.ts",
+    "typecheck": "tsc --noEmit",
+    "install:openai": "npm install --include-workspace-root --workspace=@redish/ai-provider-openai",
+    "install:aws-bedrock": "npm install --include-workspace-root --workspace=@redish/ai-provider-aws-bedrock"
+  },
+  "keywords": [
+    "redis",
+    "shopping",
+    "ecommerce",
+    "ai",
+    "ai-agent",
+    "agentic-ai",
+    "llm",
+    "langgraph",
+    "langchain",
+    "openai",
+    "aws-bedrock",
+    "agent-memory",
+    "long-term-memory",
+    "rag",
+    "agentic-rag",
+    "semantic-caching",
+    "vector-search",
+    "embeddings",
+    "tool-calling",
+    "context-retrieval",
+    "mcp",
+    "demo",
+    "typescript",
+    "nodejs"
+  ],
+  "author": "Ashwin Hariharan",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/core": "^1.3.0",
+    "@langchain/langgraph": "^1.5.2",
+    "@redis-ai/langcache": "^0.12.1",
+    "@redis-iris/agent-memory": "^0.3.1",
+    "@redis-iris/context-retriever": "^0.1.1",
+    "cookie-parser": "~1.4.7",
+    "csv-parse": "^7.0.3",
+    "dotenv": "18.0.8",
+    "express": "~5.3.0",
+    "hbs": "~4.4.0",
+    "langsmith": "^0.11.0",
+    "morgan": "~1.12.1",
+    "redis": "^6.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/hbs": "^4.0.5",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}

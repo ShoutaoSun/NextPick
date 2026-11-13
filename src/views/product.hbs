@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{product.name}} - {{appName}}</title>
+    <link rel="stylesheet" href="/themes/neo-brutalist/theme.css" media="screen,print" >
+    <link rel="stylesheet" href="/themes/neo-brutalist/product.css" media="screen,print" >
+    <link rel="icon" href="../images/redis-avatar.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <meta name="description" content="{{product.description}}">
+    <meta property="og:title" content="{{product.name}} - {{appName}}">
+    <meta property="og:description" content="{{product.description}}">
+
+    <!-- Import Maps for Client-Side Module Resolution -->
+    <script type="importmap">
+    {
+        "imports": {
+            "@components/": "/javascripts/components/",
+            "@services/": "/javascripts/services/",
+            "@utils/": "/javascripts/utils/"
+        }
+    }
+    </script>
+</head>
+<body class="neo-brutalist-theme">
+    {{> site_header}}
+
+    <!-- Product Details -->
+    <main class="product-container">
+        {{> product_detail}}
+    </main>
+
+    {{> site_footer}}
+
+    <!-- Success/Error Messages -->
+    <div id="notification-container"></div>
+
+    <script src="/javascripts/product-details-page.js" type="module"></script>
+</body>
+</html>

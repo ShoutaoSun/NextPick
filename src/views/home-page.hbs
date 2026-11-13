@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{appName}} - Instant groceries, smarter shopping</title>
+    <link rel="stylesheet" href="/themes/neo-brutalist/theme.css" media="screen,print" >
+    <link rel="stylesheet" href="/themes/neo-brutalist/product.css" media="screen,print" >
+    <link rel="stylesheet" href="/themes/neo-brutalist/canvas.css" media="screen,print" >
+    <link rel="stylesheet" href="/themes/neo-brutalist/chat.css" media="screen,print" >
+    <link rel="icon" href="images/redis-avatar.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="{{appName}} - Instant groceries, smarter shopping">
+    <meta name="description" content="Ask for a recipe or a vibe, and get products and groceries to match, with an AI shopping assistant powered by Redis.">
+    <meta name="keywords" content="Groceries, Shopping, AI assistant, Redis, Recipes">
+
+    <meta property="title" content="{{appName}}">
+    <meta property="description" content="Ask for a recipe or a vibe, and get products and groceries to match, with an AI shopping assistant powered by Redis.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{githubUrl}}">
+    <meta property="og:title" content="{{appName}} - Instant groceries, smarter shopping">
+    <meta property="og:description" content="Ask for a recipe or a vibe, and get products and groceries to match, with an AI shopping assistant powered by Redis.">
+    <meta property="og:image" content="{{githubUrl}}/raw/main/docs/screenshots/home-screen.png">
+
+    <!-- Import Maps for Client-Side Module Resolution -->
+    <script type="importmap">
+    {
+        "imports": {
+            "@components/": "/javascripts/components/",
+            "@services/": "/javascripts/services/",
+            "@utils/": "/javascripts/utils/"
+        }
+    }
+    </script>
+</head>
+<body class="neo-brutalist-theme chat-page">
+    <div class="app-layout">
+    <div class="main-column">
+    {{> site_header}}
+
+    <main class="canvas" id="canvas" data-view="home">
+    <div data-canvas-view="home">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2>🥕 Instant groceries, smarter shopping</h2>
+            <p>Ask for a recipe or a vibe, and get products and groceries to match</p>
+            <ul class="hero-features">
+                <li class="feature">
+                    <i class="fas fa-robot"></i>
+                    <span>AI shopping assistant</span>
+                </li>
+                <li class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>Search in a blink</span>
+                </li>
+                <li class="feature">
+                    <i class="fas fa-heart"></i>
+                    <span>Shop by craving</span>
+                </li>
+            </ul>
+            <form class="search-bar" role="search">
+                <input type="text" placeholder="Find a product..." class="main-search" aria-label="Search for groceries">
+                <button type="submit" class="search-btn" aria-label="Search"><i class="fas fa-search"></i> <span class="search-btn-label">Search</span></button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="categories-section">
+        <h3>Shop by category</h3>
+        <ul class="categories-grid">
+            <li>
+                <button type="button" class="category-card">
+                    <i class="fas fa-apple-alt"></i>
+                    <span>Fruits & vegetables</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="category-card">
+                    <i class="fas fa-bread-slice"></i>
+                    <span>Bakery & dairy</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="category-card">
+                    <i class="fas fa-fish"></i>
+                    <span>Meat & seafood</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="category-card">
+                    <i class="fas fa-seedling"></i>
+                    <span>Grains & pulses</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="category-card">
+                    <i class="fas fa-cookie"></i>
+                    <span>Snacks & beverages</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="category-card">
+                    <i class="fas fa-pump-soap"></i>
+                    <span>Household items</span>
+                </button>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-section">
+        <h3>Today's fresh picks</h3>
+        <ul class="products-grid">
+            <li class="product-card">
+                <figure class="product-image">🥬</figure>
+                <div class="product-info">
+                    <h4>Fresh lettuce</h4>
+                    <p class="product-price">₹45 <del class="old-price">₹60</del></p>
+                    <button class="add-btn">Add to cart</button>
+                </div>
+            </li>
+            <li class="product-card">
+                <figure class="product-image">🍅</figure>
+                <div class="product-info">
+                    <h4>Organic tomatoes</h4>
+                    <p class="product-price">₹35</p>
+                    <button class="add-btn">Add to cart</button>
+                </div>
+            </li>
+            <li class="product-card">
+                <figure class="product-image">🥛</figure>
+                <div class="product-info">
+                    <h4>Fresh milk</h4>
+                    <p class="product-price">₹65</p>
+                    <button class="add-btn">Add to cart</button>
+                </div>
+            </li>
+        </ul>
+    </section>
+    </div>
+
+    <!-- The products of the assistant's answers, shown in place of the sections above -->
+    <section class="results-view" data-canvas-view="results" aria-label="Results">
+        <header class="results-header">
+            <nav id="results-pager" class="results-pager" aria-label="Results of earlier answers" hidden>
+                <button type="button" id="results-previous" class="results-pager-button" aria-label="Previous results"><i class="fas fa-chevron-left"></i></button>
+                <p id="results-position" class="results-position" aria-live="polite"></p>
+                <button type="button" id="results-next" class="results-pager-button" aria-label="Next results"><i class="fas fa-chevron-right"></i></button>
+            </nav>
+            <h2 id="results-title" class="results-title"></h2>
+            <button type="button" id="close-results-view" class="results-close" aria-label="Close results"><i class="fas fa-times"></i></button>
+        </header>
+        <ul id="results-list" class="products-grid"></ul>
+
+        <!-- Product card shown in the results -->
+        <template id="product-card-template">
+            <li class="product-card">
+                <figure class="product-image"></figure>
+                <div class="product-info">
+                    <h4><a class="product-name"></a></h4>
+                    <p class="product-price"><data class="price"></data></p>
+                    <p class="product-card-rating"></p>
+                    <button type="button" class="add-btn" title="Add to cart">🛒 Add</button>
+                </div>
+            </li>
+        </template>
+    </section>
+
+    <!-- A product's details, shown in place of the sections above. Same markup as the page at /products/:id. -->
+    <section class="product-view" data-canvas-view="product" aria-label="Product details">
+        <button type="button" id="close-product-view" class="product-view-back">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <div class="product-container">
+            {{> product_detail}}
+        </div>
+    </section>
+    </main>
+    {{> site_footer}}
+    </div>
+
+    <!-- Chat Assistant (docked) -->
+    <aside class="chat-assistant" id="chat-assistant">
+            <header class="chat-header">
+                <div class="assistant-info">
+                    <div class="assistant-avatar"><img src="/images/icon-ai-agent.png" alt="" width="28" height="28"></div>
+                    <div>
+                        <h2>Shopping assistant</h2>
+                        <p class="status">Online • Ready to help!</p>
+                    </div>
+                </div>
+            </header>
+
+            <nav class="chat-tabs" aria-label="Assistant views">
+                <button type="button" id="chat-tab" class="chat-tab active" aria-current="true" aria-controls="chat-content">Chat</button>
+                <button type="button" id="context-tab" class="chat-tab" aria-controls="context-panel">Context</button>
+            </nav>
+
+            <section class="chat-content" id="chat-content" aria-label="Chat">
+                <ol id="chat-messages" class="chat-messages" aria-label="Conversation" aria-live="polite">
+                    <li class="welcome-message">
+                        <div class="message-content">
+                            <p>Hi there! 👋 I'm your shopping assistant!</p>
+                            <p>I can help you with:</p>
+                            <ul>
+                                <li>🥘 Recipe Ingredients</li>
+                                <li>🔍 Finding Products</li>
+                                <li>🛒 Managing Your Cart</li>
+                                <li>💡 Cooking Suggestions</li>
+                            </ul>
+                            <p>What would you like to cook today?</p>
+                        </div>
+                        <ul class="quick-suggestions">
+                            <li>
+                                <button type="button" class="suggestion-btn" data-text="Show me fresh vegetables">
+                                    🥬 Fresh vegetables
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="suggestion-btn" data-text="What's in my cart?">
+                                    🛒 View my cart
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <!-- Messages in the chat -->
+                <template id="user-message-template">
+                    <li class="message user-message">
+                        <div class="message-content user-content">
+                            <p class="message-text"></p>
+                            <time class="message-time"></time>
+                        </div>
+                    </li>
+                </template>
+
+                <template id="assistant-message-template">
+                    <li class="message assistant-message">
+                        <div class="message-content assistant-content">
+                            <p class="message-text"></p>
+                            <time class="message-time"></time>
+                        </div>
+                    </li>
+                </template>
+
+                <!-- Usage breakdown shown in the footer of an assistant message -->
+                <template id="response-info-template">
+                    <details class="response-info">
+                        <summary>Usage breakdown</summary>
+                        <p class="cached-message">This seems familiar, so we've pulled in an earlier response. No waiting in line!</p>
+                        <ul></ul>
+                        <p class="no-model-calls-message">No model calls were needed for this turn.</p>
+                    </details>
+                </template>
+
+                <!-- Shown after an assistant message: its suggested follow-ups, then the usage breakdown -->
+                <template id="reply-footer-template">
+                    <li class="reply-footer">
+                        <ul class="quick-suggestions"></ul>
+                    </li>
+                </template>
+
+                <template id="typing-indicator-template">
+                    <li class="message typing-indicator">
+                        <div class="message-content typing-content">
+                            <span class="typing-dots" role="status" aria-label="The assistant is typing">
+                                <span></span><span></span><span></span>
+                            </span>
+                        </div>
+                    </li>
+                </template>
+
+                <template id="task-progress-template">
+                    <li class="task-progress">
+                        <ol class="task-list" aria-label="What the assistant did"></ol>
+                    </li>
+                </template>
+
+                <template id="task-template">
+                    <li class="task">
+                        <progress class="spinning-donut"></progress>
+                        <span class="task-label"></span>
+                        <time class="task-duration"></time>
+                    </li>
+                </template>
+
+                <template id="new-chat-message-template">
+                    <li class="welcome-message">
+                        <div class="message-content">
+                            <p>New chat started! 🎉</p>
+                            <p>I can help you with:</p>
+                            <ul>
+                                <li>🥘 Recipe ingredients</li>
+                                <li>🔍 Finding products</li>
+                                <li>🛒 Managing your cart</li>
+                                <li>💡 Cooking suggestions</li>
+                            </ul>
+                            <p>What would you like to cook today?</p>
+                        </div>
+                        <ul class="quick-suggestions">
+                            <li>
+                                <button type="button" class="suggestion-btn" data-text="Show me fresh vegetables">
+                                    🥬 Fresh vegetables
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="suggestion-btn" data-text="What's in my cart?">
+                                    🛒 View my cart
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                </template>
+
+                <template id="suggestion-template">
+                    <li>
+                        <button type="button" class="suggestion-btn"></button>
+                    </li>
+                </template>
+
+                <form id="chat-form" class="chat-input-form">
+                    <div class="lookup-toggle-row">
+                        <label class="lookup-toggle">
+                            <input type="checkbox" id="lookup-similar-responses-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Look-up similar responses</span>
+                        </label>
+                        <span class="info-icon" role="img" aria-label="Reuse earlier answers to similar questions from semantic cache for faster replies and fewer tokens" title="Reuse earlier answers to similar questions from semantic cache for faster replies and fewer tokens">ℹ️</span>
+                    </div>
+                    <div class="input-container">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            placeholder="Ask about recipes, ingredients, or products..." 
+                            aria-label="Message the shopping assistant"
+                            autocomplete="off" 
+                            required 
+                        />
+                        <button type="submit" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- What the assistant knows about the shopper, and the earlier sessions to continue -->
+            <section class="context-panel" id="context-panel" aria-label="Context" hidden>
+                <section class="context-section">
+                    <h3>Saved preferences</h3>
+                    <ul id="context-preferences" class="context-list"></ul>
+                    <p class="context-empty">Nothing saved yet. Tell me a diet or a preference and I'll remember it.</p>
+                </section>
+                <section class="context-section">
+                    <h3>Summary of this session</h3>
+                    <p id="context-summary" class="context-summary"></p>
+                    <p class="context-empty">The summary appears once the conversation gets long.</p>
+                </section>
+                <section class="context-section">
+                    <h3>Sessions</h3>
+                    <ol id="context-sessions" class="context-list"></ol>
+                    <p class="context-empty">No sessions yet.</p>
+                </section>
+
+                <template id="context-session-template">
+                    <li>
+                        <button type="button" class="context-session">
+                            <span class="context-session-title"></span>
+                            <time class="context-session-time"></time>
+                        </button>
+                    </li>
+                </template>
+            </section>
+    </aside>
+    </div>
+
+    <script src="/javascripts/home-page.js" type="module"></script>
+    
+</body>
+</html>

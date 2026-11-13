@@ -1,0 +1,10 @@
+{
+  "name": "@redish/ai-provider-aws-bedrock",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "@langchain/aws": "^1.5.0"
+  }
+}
